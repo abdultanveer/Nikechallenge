@@ -1,12 +1,15 @@
 package com.example.nikechallenge;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.nikechallenge.adapter.SearchAdapter;
 import com.example.nikechallenge.data.ApiClient;
 import com.example.nikechallenge.data.ApiInterface;
 import com.example.nikechallenge.data.SearchResponse;
@@ -21,11 +24,14 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-
+RecyclerView searchListView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        searchListView = findViewById(R.id.search_list_view);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+        searchListView.setLayoutManager(layoutManager);
     }
 
     public void clickHandler(View view) {
@@ -37,10 +43,9 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<SearchResponse>() {
             @Override
             public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
-                Log.i(TAG,"response="+response.body());
-                Log.i(TAG,"url ="+call.request().url().toString());
-                Log.i(TAG,"responseitem="+response.body().getResults().get(0).getDefination());
-
+               Log.i(TAG,"responseitem="+response.body().getResults().get(0).getDefination());
+                SearchAdapter adapter = new SearchAdapter(response.body().getResults());
+                searchListView.setAdapter(adapter);
 
             }
 
