@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.nikechallenge.adapter.DislikesComparator;
+import com.example.nikechallenge.adapter.LikesComparator;
 import com.example.nikechallenge.adapter.SearchAdapter;
 import com.example.nikechallenge.data.ApiClient;
 import com.example.nikechallenge.data.ApiInterface;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 RecyclerView searchListView;
+    SearchAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +47,8 @@ RecyclerView searchListView;
             @Override
             public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
                Log.i(TAG,"responseitem="+response.body().getResults().get(0).getDefination());
-                SearchAdapter adapter = new SearchAdapter(response.body().getResults());
+
+                 adapter = new SearchAdapter(response.body().getResults());
                 searchListView.setAdapter(adapter);
 
             }
@@ -57,5 +61,17 @@ RecyclerView searchListView;
         });
 
 
+    }
+
+    public void sort(View view) {
+        switch (view.getId()){
+            case R.id.textViewlikes:
+                LikesComparator likesComparator = new LikesComparator();
+                    adapter.searchResults.sort(likesComparator);
+                break;
+            case R.id.textViewdislikes:
+                adapter.searchResults.sort(new DislikesComparator());
+                break;
+        }
     }
 }

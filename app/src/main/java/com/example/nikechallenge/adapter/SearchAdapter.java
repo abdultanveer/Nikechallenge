@@ -15,7 +15,7 @@ import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter{
 
-    List<SearchResult> searchResults;
+    public List<SearchResult> searchResults;
 
     public SearchAdapter(List<SearchResult> searchResults) {
         this.searchResults = searchResults;

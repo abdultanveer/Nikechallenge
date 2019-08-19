@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class SearchResult {
     @SerializedName("thumbs_up")
-    int thumbsUp;
+     public int thumbsUp;
     @SerializedName("thumbs_down")
-    int thumbsDown;
+    public int thumbsDown;
     @SerializedName("definition")
-    String defination;
+    public String defination;
 
     public SearchResult(int thumbsUp, int thumbsDown, String defination) {
         this.thumbsUp = thumbsUp;
