@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.nikechallenge.adapter.DislikesComparator;
 import com.example.nikechallenge.adapter.LikesComparator;
@@ -26,8 +28,9 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-RecyclerView searchListView;
+    RecyclerView searchListView;
     SearchAdapter adapter;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +38,11 @@ RecyclerView searchListView;
         searchListView = findViewById(R.id.search_list_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         searchListView.setLayoutManager(layoutManager);
+        progressBar = findViewById(R.id.progressBar);
     }
 
     public void clickHandler(View view) {
+        progressBar.setVisibility(View.VISIBLE);
         EditText searchEditText = findViewById(R.id.editTextSearch);
         String searchTerm = searchEditText.getText().toString();
         ApiInterface apiService =
@@ -46,6 +51,7 @@ RecyclerView searchListView;
         call.enqueue(new Callback<SearchResponse>() {
             @Override
             public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+                progressBar.setVisibility(View.GONE);
                Log.i(TAG,"responseitem="+response.body().getResults().get(0).getDefination());
 
                  adapter = new SearchAdapter(response.body().getResults());
@@ -67,10 +73,12 @@ RecyclerView searchListView;
         switch (view.getId()){
             case R.id.textViewlikes:
                 LikesComparator likesComparator = new LikesComparator();
-                    adapter.searchResults.sort(likesComparator);
+                adapter.searchResults.sort(likesComparator);
+                adapter.notifyDataSetChanged();
                 break;
             case R.id.textViewdislikes:
                 adapter.searchResults.sort(new DislikesComparator());
+                adapter.notifyDataSetChanged();
                 break;
         }
     }
