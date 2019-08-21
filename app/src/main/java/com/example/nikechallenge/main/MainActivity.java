@@ -1,4 +1,4 @@
-package com.example.nikechallenge;
+package com.example.nikechallenge.main;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,26 +8,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import com.example.nikechallenge.R;
 import com.example.nikechallenge.adapter.DislikesComparator;
 import com.example.nikechallenge.adapter.LikesComparator;
 import com.example.nikechallenge.adapter.SearchAdapter;
-import com.example.nikechallenge.data.MyViewModelFactory;
 import com.example.nikechallenge.data.SearchResult;
-import com.example.nikechallenge.data.SearchViewModel;
-import com.example.nikechallenge.data.source.remote.ApiClient;
-import com.example.nikechallenge.data.source.remote.ApiInterface;
-import com.example.nikechallenge.data.SearchResponse;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         EditText searchEditText = findViewById(R.id.editTextSearch);
         String searchTerm = searchEditText.getText().toString();
-        SearchViewModel model = ViewModelProviders.of(this,
-                new MyViewModelFactory(progressBar, searchTerm)).get(SearchViewModel.class);
+        ResultViewModel model = ViewModelProviders.of(this,
+                new ResultViewModelFactory(progressBar, searchTerm)).get(ResultViewModel.class);
 
         model.getListSearchResults().observe(this, new Observer<List<SearchResult>>() {
             @Override

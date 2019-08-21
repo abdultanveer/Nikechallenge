@@ -4,25 +4,18 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.test.espresso.PerformException;
-import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.matcher.BoundedMatcher;
-import androidx.test.espresso.matcher.ViewMatchers;
-import androidx.test.espresso.util.HumanReadables;
-import androidx.test.espresso.util.TreeIterables;
 import androidx.test.filters.LargeTest;
-import androidx.test.platform.ui.UiController;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
+
+import com.example.nikechallenge.main.MainActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -31,10 +24,8 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.core.internal.deps.guava.base.Preconditions.checkNotNull;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
-import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.junit.Assert.*;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)

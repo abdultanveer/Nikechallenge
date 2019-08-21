@@ -1,4 +1,4 @@
-package com.example.nikechallenge.data;
+package com.example.nikechallenge.main;
 
 import android.util.Log;
 import android.view.View;
@@ -8,24 +8,25 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.nikechallenge.data.SearchResponse;
+import com.example.nikechallenge.data.SearchResult;
 import com.example.nikechallenge.data.source.remote.ApiClient;
 import com.example.nikechallenge.data.source.remote.ApiInterface;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchViewModel extends ViewModel {
-    private static final String TAG = SearchViewModel.class.getSimpleName();
+public class ResultViewModel extends ViewModel {
+    private static final String TAG = ResultViewModel.class.getSimpleName();
     ProgressBar progressBar;
     String searchTerm;
     //this is the data that we will fetch asynchronously 
     private MutableLiveData<List<SearchResult>> resultList;
 
-    public SearchViewModel(ProgressBar mpProgressBar, String mParam) {
+    public ResultViewModel(ProgressBar mpProgressBar, String mParam) {
         progressBar = mpProgressBar;
         searchTerm = mParam;
     }
