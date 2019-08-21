@@ -1,6 +1,9 @@
 package com.example.nikechallenge;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,15 +12,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.nikechallenge.adapter.DislikesComparator;
 import com.example.nikechallenge.adapter.LikesComparator;
 import com.example.nikechallenge.adapter.SearchAdapter;
-import com.example.nikechallenge.data.ApiClient;
-import com.example.nikechallenge.data.ApiInterface;
-import com.example.nikechallenge.data.SearchResponse;
+import com.example.nikechallenge.data.MyViewModelFactory;
 import com.example.nikechallenge.data.SearchResult;
+import com.example.nikechallenge.data.SearchViewModel;
+import com.example.nikechallenge.data.source.remote.ApiClient;
+import com.example.nikechallenge.data.source.remote.ApiInterface;
+import com.example.nikechallenge.data.SearchResponse;
 
 import java.util.List;
 
@@ -45,24 +49,14 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         EditText searchEditText = findViewById(R.id.editTextSearch);
         String searchTerm = searchEditText.getText().toString();
-        ApiInterface apiService =
-                ApiClient.getClient().create(ApiInterface.class);
-        Call<SearchResponse> call = apiService.getListSearchResults(searchTerm);
-        call.enqueue(new Callback<SearchResponse>() {
-            @Override
-            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
-                progressBar.setVisibility(View.GONE);
-               Log.i(TAG,"responseitem="+response.body().getResults().get(0).getDefination());
+        SearchViewModel model = ViewModelProviders.of(this,
+                new MyViewModelFactory(progressBar, searchTerm)).get(SearchViewModel.class);
 
-                 adapter = new SearchAdapter(response.body().getResults());
+        model.getListSearchResults().observe(this, new Observer<List<SearchResult>>() {
+            @Override
+            public void onChanged(@Nullable List<SearchResult> heroList) {
+                adapter = new SearchAdapter(heroList);
                 searchListView.setAdapter(adapter);
-
-            }
-
-            @Override
-            public void onFailure(Call<SearchResponse> call, Throwable t) {
-                Log.i(TAG,"url ="+call.request().url().toString());
-
             }
         });
 

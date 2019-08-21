@@ -1,4 +1,6 @@
-package com.example.nikechallenge.data;
+package com.example.nikechallenge.data.source.remote;
+
+import com.example.nikechallenge.data.SearchResponse;
 
 import java.util.List;
 

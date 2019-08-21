@@ -71,7 +71,7 @@ public class MainActivityTest {
         return new BoundedMatcher<View, RecyclerView>(RecyclerView.class) {
             @Override
             public void describeTo(Description description) {
-                description.appendText("has item at position " + position + ": ");
+                //description.appendText(position + ": ");
                 itemMatcher.describeTo(description);
             }
 

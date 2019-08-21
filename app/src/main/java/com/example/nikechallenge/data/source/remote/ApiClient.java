@@ -1,4 +1,4 @@
-package com.example.nikechallenge.data;
+package com.example.nikechallenge.data.source.remote;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
